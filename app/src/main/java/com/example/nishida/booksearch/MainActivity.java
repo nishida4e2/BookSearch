@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +17,7 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity {
 
     ArrayAdapter<String> adapter;
+    String inputTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +51,18 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                inputTxt = newText;
                 return false;
             }
         });
-        
+
         return super.onCreateOptionsMenu(menu);
+    }
+
+    public void btn_Click(View v) {
+
+        Toast.makeText(getApplicationContext(), inputTxt, Toast.LENGTH_LONG).show();
+
     }
 
 
