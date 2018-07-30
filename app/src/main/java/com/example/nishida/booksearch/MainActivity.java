@@ -2,7 +2,6 @@ package com.example.nishida.booksearch;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,12 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
-
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.os.Bundle;
 
 import java.util.ArrayList;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,27 +33,14 @@ import org.xmlpull.v1.XmlPullParserFactory;
 public class MainActivity extends AppCompatActivity {
 
     private ProgressDialog m_ProgressDialog;
+    private String inputTxt;
+    private String retXml;
     ArrayAdapter<String> adapter;
-    String inputTxt;
-    String res;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        /*
-        ListView lv = (ListView)findViewById(R.id.listViewBooks);
-        ArrayList<String> arrayBooks = new ArrayList<>();
-        arrayBooks.addAll(Arrays.asList(getResources().getStringArray(R.array.array_test)));
-
-        adapter = new ArrayAdapter<>(
-                MainActivity.this,
-                android.R.layout.simple_list_item_1,
-                arrayBooks);
-        lv.setAdapter(adapter);
-        */
-
     }
 
     @Override
@@ -166,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                res = result.toString();
+                retXml = result.toString();
 
                 return 1;
             } catch (Exception e) {
@@ -188,12 +173,12 @@ public class MainActivity extends AppCompatActivity {
             }
             */
 
-            if ("".equals(res)){
+            if ("".equals(retXml)){
                 Toast.makeText(getApplicationContext(), "インターネットに接続されていません。接続を確認してから再度お試しください。", Toast.LENGTH_LONG).show();
             }
 
             try{
-                parseXml(res);
+                parseXml(retXml);
             }catch (Exception e){
 
             }
