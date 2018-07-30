@@ -180,6 +180,10 @@ public class MainActivity extends AppCompatActivity {
             }
             */
 
+            if ("".equals(res)){
+                Toast.makeText(getApplicationContext(), "インターネットに接続されていません。接続を確認してから再度お試しください。", Toast.LENGTH_LONG).show();
+            }
+
             try{
                 parseXml(res);
             }catch (Exception e){
