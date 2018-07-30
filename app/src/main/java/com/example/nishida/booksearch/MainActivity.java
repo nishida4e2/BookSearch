@@ -15,10 +15,6 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -46,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
         ListView lv = (ListView)findViewById(R.id.listViewBooks);
         ArrayList<String> arrayBooks = new ArrayList<>();
         arrayBooks.addAll(Arrays.asList(getResources().getStringArray(R.array.array_test)));
@@ -55,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1,
                 arrayBooks);
         lv.setAdapter(adapter);
+        */
 
     }
 
@@ -96,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            m_ProgressDialog = ProgressDialog.show(MainActivity.this, "しばらくお待ち下さい", "検索処理中...", true);
+            m_ProgressDialog = ProgressDialog.show(MainActivity.this, "しばらくお待ちください", "検索中...", true);
         }
 
         String retTxt;
@@ -196,17 +194,25 @@ public class MainActivity extends AppCompatActivity {
             ListView lv = (ListView)findViewById(R.id.listViewBooks);
             ArrayList<String> arrayBooks = new ArrayList<>();
 
+            int cnt = 0;
+
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 if (eventType == XmlPullParser.START_TAG) {
                     elementName = parser.getName();
                     if(elementName.equals("title")){
                         eventType = parser.next();
                         if(eventType == XmlPullParser.TEXT){
-                            arrayBooks.add(parser.getText());
+                            if(cnt!=0) arrayBooks.add(parser.getText());
+                            cnt++;
                         }
                     }
                 }
                 eventType = parser.next();
+            }
+
+            if(cnt==1){
+                //arrayBooks.add("検索ワード「"+inputTxt+"」に一致する書籍は見つかりませんでした。別の検索ワードをお試しください。");
+                Toast.makeText(getApplicationContext(), "検索ワード「"+inputTxt+"」に一致する書籍は見つかりませんでした。別の検索ワードをお試しください。", Toast.LENGTH_LONG).show();
             }
 
 
