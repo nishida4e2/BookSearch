@@ -65,9 +65,17 @@ public class MainActivity extends AppCompatActivity {
         MenuItem item = menu.findItem(R.id.menuSearch);
         SearchView searchView = (SearchView)item.getActionView();
 
+        searchView.setSubmitButtonEnabled(true);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                if (inputTxt==null){
+                    inputTxt = "";
+                }
+
+                new TaskBookSearch().execute(inputTxt);
+
                 return false;
             }
 
