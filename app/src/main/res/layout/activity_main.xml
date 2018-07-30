@@ -23,7 +23,7 @@
             android:text="検　索" />
 
         <ListView
-            android:id="@+id/listViewCount"
+            android:id="@+id/listViewBooks"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1" />
