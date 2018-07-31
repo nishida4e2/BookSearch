@@ -91,11 +91,7 @@ public class MainActivity extends AppCompatActivity {
                         inReader.close();
                         in.close();
                     }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (ProtocolException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
                     if (con != null) con.disconnect();
