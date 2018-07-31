@@ -13,15 +13,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import java.util.ArrayList;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -72,31 +65,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Integer doInBackground(String... params) {
             try {
-                final StringBuilder result = new StringBuilder();
-                final URL url = new URL(Common.SERVICE_API_URL + params[0]);
-                HttpURLConnection con = null;
-                try {
-                    con = (HttpURLConnection) url.openConnection();
-                    con.connect();
-                    final int status = con.getResponseCode();
-                    if (status == HttpURLConnection.HTTP_OK) {
-                        final InputStream in = con.getInputStream();
-                        final InputStreamReader inReader = new InputStreamReader(in);
-                        final BufferedReader bufReader = new BufferedReader(inReader);
-                        String line = null;
-                        while((line = bufReader.readLine()) != null) {
-                            result.append(line);
-                        }
-                        bufReader.close();
-                        inReader.close();
-                        in.close();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    if (con != null) con.disconnect();
-                }
-                retXml = result.toString();
+                retXml = AccessService.getXmlStringFromUrl_GET(Common.SERVICE_API_URL + params[0]);
                 return Common.RESULT_SUCCESS;
             } catch (Exception e) {
                 e.printStackTrace();
